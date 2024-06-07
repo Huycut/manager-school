@@ -59,22 +59,22 @@
                     <tbody>
                         <?php foreach ($teachers as $teacher): ?>
                             <tr>
-                                <td>
+                                <td class="editable">
                                     <?= $teacher['id'] ?>
                                 </td>
-                                <td>
+                                <td class="editable">
                                     <?= $teacher['name'] ?>
                                 </td>
-                                <td>
+                                <td class="editable">
                                     <?= $teacher['magiaovien'] ?>
                                 </td>
-                                <td>
+                                <td class="editable">
                                     <?= $teacher['phone'] ?>
                                 </td>
-                                <td>
+                                <td class="editable">
                                     <?= $teacher['trinhdo'] ?>
                                 </td>
-                                <td>
+                                <td class="editable">
                                     <?= $teacher['hinhanh'] ?>
                                 </td>
                             </tr>
@@ -101,7 +101,31 @@
 
 <!-- Page level custom scripts -->
 <script src="js/demo/datatables-demo.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('.editable').forEach(cell => {
+        cell.addEventListener('click', function() {
+            if (!this.querySelector('input')) {
+                let currentText = this.textContent.trim();
+                this.innerHTML = `<input type="text" value="${currentText}" style="width: ${this.offsetWidth}px;" />`;
+                let input = this.querySelector('input');
+                input.focus();
 
+                input.addEventListener('blur', function() {
+                    let newText = this.value.trim();
+                    this.parentElement.textContent = newText;
+                });
+
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        this.blur();
+                    }
+                });
+            }
+        });
+    });
+});
+</script>
 
 
 </html>

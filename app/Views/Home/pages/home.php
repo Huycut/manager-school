@@ -32,7 +32,7 @@
                                     <p class="card-text">Thời Gian: </p>
                                 </div>
                                 <div class="card bg-lightblue col-md-6 row_card_chill">
-                                    <p class="card-text">13:30 - 15:00</p>
+                                    <p class="card-text"><?=$sc['timeStar']?> - <?=$sc['timeEnd']?></p>
                                 </div>
                             </div>
                             <div class="card bg-lightblue col-md-12 row_card">
@@ -40,7 +40,7 @@
                                     <p class="card-text">Buổi Học</p>
                                 </div>
                                 <div class="card bg-lightblue col-md-6 row_card_chill">
-                                    <p class="card-text">Chiều</p>
+                                    <p class="card-text"><?= $sc['buoi']?></p>
                                 </div>
                             </div>
                             <div class="card bg-lightblue col-md-12 row_card">

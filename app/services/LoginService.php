@@ -41,8 +41,7 @@ class LoginService extends BaseService
         }
 
         // $c = password_hash($param['password'], PASSWORD_BCRYPT);
-
-        if (!password_verify($param['password'], $user['password'])) {
+        if ($param['password']!=$user['password']) {
             // dd($param['password']);
             return [
                 'status' => Result::STATUS_CODE_ERR,

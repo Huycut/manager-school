@@ -22,7 +22,7 @@ class scheduleService extends BaseService
     public function getSchedule()
     {
         return $this->schedule->table('lichhoc')
-        ->select('subject.name as subject_name, teacher.name as teacher_name, class.nameClass,lichhoc.date')
+        ->select('subject.name as subject_name, teacher.name as teacher_name, class.nameClass,lichhoc.buoi,lichhoc.date,lichhoc.timeStar,lichhoc.timeEnd')
         ->join('subject', 'lichhoc.id_subject = subject.id')
         ->join('teacher', 'lichhoc.id_teacher = teacher.id')
         ->join('class', 'lichhoc.id_class = class.id')
