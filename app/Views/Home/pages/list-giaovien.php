@@ -57,28 +57,28 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        <?php foreach ($teachers as $teacher): ?>
-                            <tr>
-                                <td class="editable">
-                                    <?= $teacher['id'] ?>
-                                </td>
-                                <td class="editable">
-                                    <?= $teacher['name'] ?>
-                                </td>
-                                <td class="editable">
-                                    <?= $teacher['magiaovien'] ?>
-                                </td>
-                                <td class="editable">
-                                    <?= $teacher['phone'] ?>
-                                </td>
-                                <td class="editable">
-                                    <?= $teacher['trinhdo'] ?>
-                                </td>
-                                <td class="editable">
-                                    <?= $teacher['hinhanh'] ?>
-                                </td>
-                            </tr>
-                        <?php endforeach ?>
+                            <?php foreach ($teachers as $teacher): ?>
+                                <tr>
+                                    <td class="editable" data-id="<?= $teacher['id'] ?>" data-field="id">
+                                        <?= $teacher['id'] ?>
+                                    </td>
+                                    <td class="editable" data-id="<?= $teacher['id'] ?>" data-field="name">
+                                        <?= $teacher['name'] ?>
+                                    </td>
+                                    <td class="editable" data-id="<?= $teacher['id'] ?>" data-field="magiaovien">
+                                        <?= $teacher['magiaovien'] ?>
+                                    </td>
+                                    <td class="editable" data-id="<?= $teacher['id'] ?>" data-field="phone">
+                                        <?= $teacher['phone'] ?>
+                                    </td>
+                                    <td class="editable" data-id="<?= $teacher['id'] ?>" data-field="trinhdo">
+                                        <?= $teacher['trinhdo'] ?>
+                                    </td>
+                                    <td class="editable" data-id="<?= $teacher['id'] ?>" data-field="hinhanh">
+                                        <?= $teacher['hinhanh'] ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
                     </tbody>
                 </table>
             </div>
@@ -113,9 +113,18 @@
 
                 input.addEventListener('blur', function() {
                     let newText = this.value.trim();
-                    this.parentElement.textContent = newText;
-                });
+                    let cell = this.parentElement;
+                    let id = cell.getAttribute('data-id');
+                    let field = cell.getAttribute('data-field');
 
+                    cell.textContent = newText;
+
+                    // Gửi yêu cầu AJAX để cập nhật cơ sở dữ liệu
+                    let xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/teachers/update', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.send(`id=${id}&field=${field}&value=${newText}`);
+                });
                 input.addEventListener('keydown', function(e) {
                     if (e.key === 'Enter') {
                         this.blur();

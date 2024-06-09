@@ -10,5 +10,6 @@ $routes->get('login', 'LoginController::index');
 $routes->post('login', 'LoginController::login');
 $routes->get('list-sinhvien', 'SinhvienController::index');
 $routes->get('list-giaovien', 'GiaovienController::index');
+$routes->post('/teachers/update', 'GiaovienController::update');
 $routes->get('list-monhoc', 'MonHocController::index');
 //$routes->get('list-sinhviens/(:segment)', 'SinhvienController::search');

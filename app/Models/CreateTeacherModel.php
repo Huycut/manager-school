@@ -7,12 +7,13 @@ use CodeIgniter\Model;
 class CreateTeacherModel extends Model
 {
     protected $table            = 'teacher';
-    protected $primaryKey       = 'teacher_Code';
+    protected $primaryKey       = 'id';
+    
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields = [];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

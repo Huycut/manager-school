@@ -25,5 +25,15 @@ class TeacherService extends BaseService
     public function getSearchTeacher($search){
         return $this->teachers->select('*')->like('name',$search,'both')->get()->getResultArray();
     }
+    public function updateTeacher($id, $field, $value)
+    {
+        // Sử dụng biến trung gian để tạo mảng kết hợp
+        $data = [
+            $field => $value
+        ];
+
+        // Cập nhật mảng kết hợp
+        return $this->teachers->update($id, $data);
+    }
 
 }

@@ -26,6 +26,17 @@ class GiaovienController extends BaseController
         $data = $this->loadLayout($data, 'Trang chủ', 'Home/pages/list-giaovien', $dataCategory, [], []);
         return view('Home/index', $data);
     }
+    public function update(){
+        $id = $this->request->getPost('id');
+        $field = $this->request->getPost('field');
+        $value = $this->request->getPost('value');
+        if ($this->teacher->updateTeacher($id, $field, $value)) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Cập nhật thành công']);
+        } else {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Lỗi: không thể cập nhật']);
+        }
+
+    }
 
 }
 
