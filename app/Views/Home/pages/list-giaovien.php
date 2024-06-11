@@ -310,6 +310,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    alert("xóa thành công");
                     // Xóa hàng trong bảng nếu xóa thành công
                     const row = this.closest("tr");
                     row.remove();
