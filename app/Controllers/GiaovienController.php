@@ -37,6 +37,22 @@ class GiaovienController extends BaseController
         }
 
     }
+    public function addTeacher(){
+        
+            $json = $this->request->getJSON();
+            $data = [
+                'name' => $json->name,
+                'magiaovien' => $json->magiaovien,
+                'phone' => $json->phone,
+                'trinhdo' => $json->trinhdo,
+                'hinhanh' => $json->hinhanh,
+            ];
+            return $this->response->setJSON($this->teacher->addTeacher($data));
+        
+        
+        
+        
+    }
 
 }
 

@@ -1,6 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+        .editable {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
+            padding-top: 60px; 
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 <head>
 
     <meta charset="utf-8">
@@ -30,8 +67,38 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Danh Sách Sinh Viên</h1>
+    <h1 class="h3 mb-2 text-gray-800">Danh Sách Sinh Viên</h1> 
     <!-- DataTales Example -->
+    <button id="addRowBtn">Thêm hàng</button>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Thêm Giáo Viên</h2>
+            <form id="teacherForm">
+                <label for="id">ID:</label><br>
+                <input type="text" id="id" name="id"><br>
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name"><br>
+                <label for="magiaovien">Ma Giao Vien:</label><br>
+                <input type="text" id="magiaovien" name="magiaovien"><br>
+                <label for="phone">Phone:</label><br>
+                <input type="text" id="phone" name="phone"><br>
+                <label for="trinhdo">Trinh Do:</label><br>
+                <input type="text" id="trinhdo" name="trinhdo"><br>
+                <label for="hinhanh">Hinh Anh:</label><br>
+                <input type="text" id="hinhanh" name="hinhanh"><br><br>
+                <label for="cn">Chuyên Ngành</label><br>
+                <select id="cars">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="opel">Opel</option>
+                    <option value="audi">Audi</option>
+                </select>
+                <button type="button" id="saveBtn">Lưu</button>
+
+            </form>
+        </div>
+    </div>
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
@@ -134,7 +201,89 @@
         });
     });
 });
+var modal = document.getElementById("myModal");
+var btn = document.getElementById("addRowBtn");
+var span = document.getElementsByClassName("close")[0];
+var saveBtn = document.getElementById("saveBtn");
+
+// Khi người dùng bấm nút, mở modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// Khi người dùng bấm vào <span> (x), đóng modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// Khi người dùng bấm vào bất cứ đâu bên ngoài modal, đóng modal
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Khi người dùng bấm nút lưu trong form
+saveBtn.onclick = function() {
+    // Lấy giá trị từ form
+    var id = document.getElementById('id').value;
+    var name = document.getElementById('name').value;
+    var magiaovien = document.getElementById('magiaovien').value;
+    var phone = document.getElementById('phone').value;
+    var trinhdo = document.getElementById('trinhdo').value;
+    var hinhanh = document.getElementById('hinhanh').value;
+
+    // Tạo object chứa dữ liệu từ form
+    var xhr = new XMLHttpRequest();
+var url = "/teachers/addTeacher";
+xhr.open("POST", url, true);
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
+            if (data.status === 200) {
+                // Nếu thành công, thêm hàng mới vào bảng
+                var tableBody = document.querySelector('#dataTable tbody');
+                var newRow = document.createElement('tr');
+                
+                var fields = ['id', 'name', 'magiaovien', 'phone', 'trinhdo', 'hinhanh'];
+                fields.forEach(function(field) {
+                    var newCell = document.createElement('td');
+                    newCell.classList.add('editable');
+                    newCell.setAttribute('data-id', data.id); // Sử dụng id từ phản hồi
+                    newCell.setAttribute('data-field', field);
+                    newCell.textContent = formData[field]; // Đặt nội dung ô bằng giá trị từ form
+                    newRow.appendChild(newCell);
+                });
+                
+                tableBody.appendChild(newRow);
+                // Đóng modal
+                modal.style.display = "none";
+                alert('Thêm thành công');
+                // Reset form
+                document.getElementById('teacherForm').reset();
+            } else {
+                alert('Có lỗi xảy ra khi thêm giáo viên: ' + data.message);
+            }
+        } else {
+            alert('Đã có lỗi xảy ra khi gửi yêu cầu đến máy chủ.');
+        }
+    }
+};
+
+var formData = {
+    id: id,
+    name: name,
+    magiaovien: magiaovien,
+    phone: phone,
+    trinhdo: trinhdo,
+    hinhanh: hinhanh
+};
+
+xhr.send(JSON.stringify(formData));
+}
 </script>
-ss
 
 </html>
