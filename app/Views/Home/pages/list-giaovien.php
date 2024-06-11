@@ -111,6 +111,7 @@
                             <th>Số Điện Thoại</th>
                             <th>Trình Độ</th>
                             <th>Hình Ảnh</th>
+                            <th>Xóa</th>
                     </thead>
                     <tfoot>
                         <tr>
@@ -120,6 +121,7 @@
                             <th>Số Điện Thoại</th>
                             <th>Trình Độ</th>
                             <th>Hình Ảnh</th>
+                            <th>Xóa</th>
 
                         </tr>
                     </tfoot>
@@ -144,6 +146,9 @@
                                     <td class="editable" data-id="<?= $teacher['id'] ?>" data-field="hinhanh">
                                         <?= $teacher['hinhanh'] ?>
                                     </td>
+                                    <td>
+                                        <button class="delete-btn" data-id="<?= $teacher['id'] ?>">Xóa</button>
+                                     </td>
                                 </tr>
                             <?php endforeach ?>
                     </tbody>
@@ -284,6 +289,40 @@ var formData = {
 
 xhr.send(JSON.stringify(formData));
 }
+
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const deleteButtons = document.querySelectorAll(".delete-btn");
+
+    deleteButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const teacherId = this.getAttribute("data-id");
+
+            // Thực hiện yêu cầu AJAX để xóa giáo viên
+            fetch(`/delete_teacher`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `id=${teacherId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Xóa hàng trong bảng nếu xóa thành công
+                    const row = this.closest("tr");
+                    row.remove();
+                } else {
+                    alert("Xóa giáo viên không thành công.");
+                }
+            })
+            .catch(error => {
+                console.error("Lỗi:", error);
+            });
+        });
+    });
+});
 </script>
 
 </html>

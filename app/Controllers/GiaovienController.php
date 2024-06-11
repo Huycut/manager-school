@@ -53,6 +53,15 @@ class GiaovienController extends BaseController
         
         
     }
+    public function deleteTeacher(){
+        $teacherId = $this->request->getPost('id');
+        
+        if ($this->teacher->deleteTeacher($teacherId)) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false, 'message' => 'Không thể xóa giáo viên']);
+        }
+    }
 
 }
 
