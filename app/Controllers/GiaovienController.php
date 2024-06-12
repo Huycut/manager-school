@@ -53,7 +53,7 @@ class GiaovienController extends BaseController
         
         
     }
-    public function deleteTeacher(){
+    public function deleteTeachers(){
         $teacherId = $this->request->getPost('id');
         
         if ($this->teacher->deleteTeacher($teacherId)) {

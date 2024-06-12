@@ -55,7 +55,7 @@ class TeacherService extends BaseService
         return $response;
     }
     public function deleteTeacher($id){
-        $deleted = $this->teachers->table('teachers')->delete(['id' => $id]);   
+        $deleted = $this->teachers->table('teacher')->delete(['id' => $id]);   
         return $deleted;
     }
 

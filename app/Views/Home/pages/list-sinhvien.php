@@ -74,8 +74,6 @@
             <span class="close">&times;</span>
             <h2>Thêm Sinh Viên</h2>
             <form id="teacherForm">
-                <label for="id">ID:</label><br>
-                <input type="text" id="id" name="id"><br>
                 <label for="name">Name:</label><br>
                 <input type="text" id="name" name="name"><br>
                 <label for="masinhvien">Mã Sinh Viên</label><br>
@@ -94,9 +92,15 @@
                 <label for="diachi">Địa Chỉ:</label><br>
                 <input type="text" id="diachi" name="diachi"><br>
                 <label for="quequan">Quê Quán:</label><br>
-                <input type="text" id="quequan" name="quequan"><br>
+                <input type="text" id="quequan" name="quequan"><br>            
+                <label for="class">Lớp:</label><br>
+                <select id="classId">
+                    <?php foreach($dataClass as $class):?>
+                        <option value="<?=$class['id']?>"><?=$class['nameClass']?></option>
+                    <?php endforeach?>
+                </select><br>
                 <button type="button" id="saveBtn">Lưu</button>
-
+                
             </form>
         </div>
     </div>
@@ -234,7 +238,6 @@ window.onclick = function(event) {
 // Khi người dùng bấm nút lưu trong form
 saveBtn.onclick = function() {
     // Lấy giá trị từ form
-    var id = document.getElementById('id').value;
     var name = document.getElementById('name').value;
     var masinhvien = document.getElementById('masinhvien').value;
     var phone = document.getElementById('phone').value;
@@ -243,6 +246,7 @@ saveBtn.onclick = function() {
     var dantoc = document.getElementById('dantoc').value;
     var diachi = document.getElementById('diachi').value;
     var quequan = document.getElementById('quequan').value;
+    var classId = document.getElementById('classId').value;
 
     // Tạo object chứa dữ liệu từ form
     var xhr = new XMLHttpRequest();
@@ -286,7 +290,6 @@ xhr.onreadystatechange = function () {
 };
 
 var formData = {
-        id: id,
         name: name,
         masinhvien: masinhvien,
         phone: phone,
@@ -294,7 +297,8 @@ var formData = {
         sex: sex,
         dantoc: dantoc,
         diachi: diachi,
-        quequan: quequan
+        quequan: quequan,
+        classId: classId
 };
 
 xhr.send(JSON.stringify(formData));
@@ -307,7 +311,7 @@ document.addEventListener("DOMContentLoaded", function() {
         button.addEventListener("click", function() {
             const studentId= this.getAttribute("data-id");
 
-            // Thực hiện yêu cầu AJAX để xóa giáo viên
+            // Thực hiện yêu cầu AJAX để xóa sinhvien
             fetch(`/delete_student`, {
                 method: "POST",
                 headers: {

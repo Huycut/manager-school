@@ -1,22 +1,27 @@
 <?php
 namespace App\Controllers;
 
+
 use App\Services\StudentService;
+use App\Services\ClassServices;
 use App\Common\Result;
 
 class SinhvienController extends BaseController
 {
     public $student;
+    public $class;
 
     public function __construct()
     {
         $this->student = new StudentService();
+        $this->class = new ClassServices();
 
     }
 
     public function index(): string
     {   
         $data = [];
+        $dataCategory['dataClass']=$this->class->getClass();
         if($this->request->getVar('query')){
             $dataCategory["students"] = $this->student->getSearchStudent($this->request->getVar('query'));
         }
@@ -24,6 +29,7 @@ class SinhvienController extends BaseController
             $dataCategory["students"] = $this->student->getAllStudent();
         }
         $data = $this->loadLayout($data, 'Trang chủ', 'Home/pages/list-sinhvien', $dataCategory, [], []);
+
         return view('Home/index', $data);
     }
     public function updateStudent(){
@@ -49,7 +55,9 @@ class SinhvienController extends BaseController
             'diachi' => $json->diachi,
             'quequan' => $json->quequan,
         ];
-        return $this->response->setJSON($this->student->addStudent($data));
+        $reponse = $this->student->addStudent($data);
+        $this->class->studentAddClass($json->classId);
+        return $this->response->setJSON($reponse);
     }
     public function deleteStudent(){
         $studentId = $this->request->getPost('id');

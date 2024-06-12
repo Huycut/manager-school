@@ -17,6 +17,6 @@ $routes->post('/delete_student', 'SinhvienController::deleteStudent');
 $routes->get('list-giaovien', 'GiaovienController::index');
 $routes->post('/teachers/update', 'GiaovienController::update');
 $routes->post('/teachers/addTeacher', 'GiaovienController::addTeacher');
-$routes->post('/delete_teacher', 'GiaovienController::deleteTeacher');
+$routes->post('deleteTeacher', 'GiaovienController::deleteTeachers');
 $routes->get('list-monhoc', 'MonHocController::index');
 //$routes->get('list-sinhviens/(:segment)', 'SinhvienController::search');

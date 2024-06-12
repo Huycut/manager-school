@@ -4,10 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CreateClassModel extends Model
+class CreateStudentClass extends Model
 {
-    protected $table            = 'class';
-    protected $primaryKey       = 'id';
+    protected $table            = 'student_class';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;

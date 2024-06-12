@@ -298,9 +298,9 @@ document.addEventListener("DOMContentLoaded", function() {
     deleteButtons.forEach(button => {
         button.addEventListener("click", function() {
             const teacherId = this.getAttribute("data-id");
-
+            console.log(teacherId);
             // Thực hiện yêu cầu AJAX để xóa giáo viên
-            fetch(`/delete_teacher`, {
+            fetch(`/deleteTeacher`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -309,7 +309,9 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .then(response => response.json())
             .then(data => {
+                console.log(data.success);
                 if (data.success) {
+                    
                     alert("xóa thành công");
                     // Xóa hàng trong bảng nếu xóa thành công
                     const row = this.closest("tr");
