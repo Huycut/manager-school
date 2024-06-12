@@ -8,7 +8,12 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->get('login', 'LoginController::index');
 $routes->post('login', 'LoginController::login');
+
 $routes->get('list-sinhvien', 'SinhvienController::index');
+$routes->post('/student/update', 'SinhvienController::updateStudent');
+$routes->post('/student/addStudent', 'SinhvienController::addStudent');
+$routes->post('/delete_student', 'SinhvienController::deleteStudent');
+
 $routes->get('list-giaovien', 'GiaovienController::index');
 $routes->post('/teachers/update', 'GiaovienController::update');
 $routes->post('/teachers/addTeacher', 'GiaovienController::addTeacher');

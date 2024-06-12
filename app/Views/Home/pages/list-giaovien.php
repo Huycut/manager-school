@@ -5,7 +5,7 @@
             padding: 8px;
             border: 1px solid #ddd;
         }
-        .modal {
+        .modall {
             display: none; 
             position: fixed; 
             z-index: 1; 

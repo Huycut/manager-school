@@ -26,6 +26,40 @@ class SinhvienController extends BaseController
         $data = $this->loadLayout($data, 'Trang chủ', 'Home/pages/list-sinhvien', $dataCategory, [], []);
         return view('Home/index', $data);
     }
+    public function updateStudent(){
+        $id = $this->request->getPost('id');
+        $field = $this->request->getPost('field');
+        $value = $this->request->getPost('value');
+        if ($this->student->updateStudent($id, $field, $value)) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Cập nhật thành công']);
+        } else {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Lỗi: không thể cập nhật']);
+        }
+    }
+    public function addStudent(){
+        
+        $json = $this->request->getJSON();
+        $data = [
+            'name' => $json->name,
+            'masinhvien' => $json->masinhvien,
+            'phone' => $json->phone,
+            'ngaysinh' => $json->ngaysinh,
+            'gioitinh' => $json->sex,
+            'dantoc' => $json->dantoc,
+            'diachi' => $json->diachi,
+            'quequan' => $json->quequan,
+        ];
+        return $this->response->setJSON($this->student->addStudent($data));
+    }
+    public function deleteStudent(){
+        $studentId = $this->request->getPost('id');
+        
+        if ($this->student->deleteStudent($studentId)) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false, 'message' => 'Không thể xóa sinh viên']);
+        }
+    }
 
 }
 
